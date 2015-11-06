@@ -3,6 +3,7 @@ float x;  // horizontal position of circle centre
 float y;  // vertical position of circle centre 
 float r;  // radius of circle
 int currentPoints;   // current points available to earn if this circle is clicked
+float distance;  // distance between centre of circle and mouse click
 
 // this runs once
 void setup() {
@@ -19,9 +20,12 @@ void setup() {
   // circle starts in random position on screen
   x = random(0, width);
   y = random(0, height);
-  
+
   // set current value of this circle
   currentPoints = 10;
+
+  // set "initial distance" between mouse click and centre of circle
+  distance = height + 1;
 
   // all circles have black fill
   fill(0);
@@ -41,26 +45,38 @@ void draw() {
   r = r + 2;
 
   // if circle gets beyond 150 pixels in size, start a new one
-  if (r > 150) {
+  // OR
+  // if there is a hit
+  if (r > 150 || distance < r) {
     // initial radius is 0 pixels
     r = 0;
 
     // circle starts in random position on screen
     x = random(0, width);
     y = random(0, height);
-    
+
     // restart current points
     currentPoints = 10;
+
+    // set "initial distance" between mouse click and centre of circle
+    distance = height + 1;
   }
-  
+
   // reduce points available for this circle
   if (frameCount % 15 == 0) { 
     currentPoints = currentPoints - 1;
   }
-  
+
   // display the value of the circle that is currently on the screen somewhere
   stroke(127);
   textAlign(CENTER);
   text("Points available: " + currentPoints, width/2, height - 50);
-  
+}
+
+void mouseClicked() {
+
+  // check for a hit
+  float leg1 = pow(x - mouseX, 2);  // horizontal distance between centre of circle and mouse position
+  float leg2 = pow(y - mouseY, 2);  // vertical distance between centre of circle and mouse position
+  distance = sqrt(leg1 + leg2);     // distance between centre of circle and mouse click
 }
