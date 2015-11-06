@@ -30,6 +30,9 @@ void setup() {
 
   // all circles have black fill
   fill(0);
+  
+  // show a cursor that is a crosshairs
+  cursor(CROSS);
 }
 
 // this runs repeatedly
