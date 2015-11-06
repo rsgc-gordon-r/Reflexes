@@ -5,6 +5,7 @@ float r;  // radius of circle
 int currentPoints;   // current points available to earn if this circle is clicked
 int score;           // current score earned
 float distance;      // distance between centre of circle and mouse click
+int timeLeft;      // time left in the game
 
 // this runs once
 void setup() {
@@ -28,9 +29,15 @@ void setup() {
   // set "initial distance" between mouse click and centre of circle
   distance = height + 1;
 
+  // set time left in the game
+  timeLeft = 10;
+
+  // set frame rate
+  frameRate(60);
+
   // all circles have black fill
   fill(0);
-  
+
   // show a cursor that is a crosshairs
   cursor(CROSS);
 }
@@ -67,7 +74,6 @@ void draw() {
 
     // set "initial distance" between mouse click and centre of circle
     distance = height + 1;
-    
   }
 
   // reduce points available for this circle
@@ -75,15 +81,34 @@ void draw() {
     currentPoints = currentPoints - 1;
   }
 
+  // reduce the time left every sixty frames
+  if (frameCount % 60 == 0) {
+    timeLeft = timeLeft - 1;
+  }
+
   // display the value of the circle that is currently on the screen at bottom of screen
   stroke(127);
   textAlign(CENTER);
   text("Points available: " + currentPoints, width/2, height - 50);
 
-  // display current score at top of screen
+  // display time left in game at left side of screen
   stroke(127);
-  textAlign(CENTER);
-  text("Score: " + score, width/2, 50);
+  textAlign(LEFT);
+  text("Time remaining: " + timeLeft, 50, 50);
+
+  // display current score at right side of screen
+  stroke(127);
+  textAlign(RIGHT);
+  text("Score: " + score, width - 50, 50);
+
+  // end game if time runs out
+  if (timeLeft == 0) {
+    stroke(127);
+    textAlign(CENTER);
+    textSize(48);
+    text("GAME OVER", width / 2, height / 2);
+    noLoop();
+  }
 }
 
 void mouseClicked() {
