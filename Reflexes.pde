@@ -14,6 +14,10 @@ void setup() {
   
   // initial radius is 5 pixels
   r = 5;
+
+  // circle starts in random position on screen
+  x = random(0, width);
+  y = random(0, height);
   
   // all circles have black fill
   fill(0);
