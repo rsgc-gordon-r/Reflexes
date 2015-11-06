@@ -2,7 +2,7 @@
 float x;  // horizontal position of circle centre
 float y;  // vertical position of circle centre 
 float r;  // radius of circle
-float currentPoints;   // current points available to earn if this circle is clicked
+int currentPoints;   // current points available to earn if this circle is clicked
 
 // this runs once
 void setup() {
@@ -50,11 +50,13 @@ void draw() {
     y = random(0, height);
     
     // restart current points
-    currentPoints = 0;
+    currentPoints = 10;
   }
   
   // reduce points available for this circle
-  currentPoints = currentPoints - 1;
+  if (frameCount % 15 == 0) { 
+    currentPoints = currentPoints - 1;
+  }
   
   // display the value of the circle that is currently on the screen somewhere
   stroke(127);
