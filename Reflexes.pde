@@ -9,8 +9,8 @@ void setup() {
    size(450, 800);
 
   // pick location for this circle
-  x = 200;
-  y = 200;
+  x = width/2;    // using built-in variable from Processing, it is screen width (450)
+  y = height/2;   // using built-in variable from Processing, it is screen height (800)
   
   // initial radius is 5 pixels
   r = 5;
