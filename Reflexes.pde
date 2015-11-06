@@ -3,7 +3,8 @@ float x;  // horizontal position of circle centre
 float y;  // vertical position of circle centre 
 float r;  // radius of circle
 int currentPoints;   // current points available to earn if this circle is clicked
-float distance;  // distance between centre of circle and mouse click
+int score;           // current score earned
+float distance;      // distance between centre of circle and mouse click
 
 // this runs once
 void setup() {
@@ -55,11 +56,15 @@ void draw() {
     x = random(0, width);
     y = random(0, height);
 
+    // increase the score by whatever value is left for current circle
+    score = score + currentPoints;
+
     // restart current points
     currentPoints = 10;
 
     // set "initial distance" between mouse click and centre of circle
     distance = height + 1;
+    
   }
 
   // reduce points available for this circle
@@ -67,10 +72,15 @@ void draw() {
     currentPoints = currentPoints - 1;
   }
 
-  // display the value of the circle that is currently on the screen somewhere
+  // display the value of the circle that is currently on the screen at bottom of screen
   stroke(127);
   textAlign(CENTER);
   text("Points available: " + currentPoints, width/2, height - 50);
+
+  // display current score at top of screen
+  stroke(127);
+  textAlign(CENTER);
+  text("Score: " + score, width/2, 50);
 }
 
 void mouseClicked() {
