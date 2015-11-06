@@ -1,7 +1,8 @@
 // global variables – can be used anywhere below
 float x;  // horizontal position of circle centre
 float y;  // vertical position of circle centre 
-float r;  // radius of circle 
+float r;  // radius of circle
+float currentPoints;   // current points available to earn if this circle is clicked
 
 // this runs once
 void setup() {
@@ -18,6 +19,9 @@ void setup() {
   // circle starts in random position on screen
   x = random(0, width);
   y = random(0, height);
+  
+  // set current value of this circle
+  currentPoints = 10;
 
   // all circles have black fill
   fill(0);
@@ -45,5 +49,10 @@ void draw() {
     x = random(0, width);
     y = random(0, height);
   }
+  
+  // display the value of the circle that is currently on the screen somewhere
+  stroke(127);
+  textAlign(CENTER);
+  text("Points available: " + currentPoints, width/2, height - 50);
   
 }
