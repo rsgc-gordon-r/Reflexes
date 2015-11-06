@@ -48,7 +48,13 @@ void draw() {
     // circle starts in random position on screen
     x = random(0, width);
     y = random(0, height);
+    
+    // restart current points
+    currentPoints = 0;
   }
+  
+  // reduce points available for this circle
+  currentPoints = currentPoints - 1;
   
   // display the value of the circle that is currently on the screen somewhere
   stroke(127);
