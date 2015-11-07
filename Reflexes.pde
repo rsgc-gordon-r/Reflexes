@@ -1,8 +1,18 @@
+// import sound library
+// NOTE: Must install the Processing sound library on your computer.
+//       Go to: Sketch > Import Library > Add Library
+//       Search for "sound" then install the Sound library (by Processing Foundation)
+import processing.sound.*;
+
 // global variables – can be used anywhere below
 Circle[] target;      // array of targets for game play
 int targetCount = 3;  // how many targets to create
 int current;          // what target is "active"
 
+// Sound effect
+SoundFile poisonHit;
+
+// Game play variables
 int score;          // current score earned
 int highScore;      // highest score earned in this session
 int timeLeft;       // time left in the game
@@ -38,6 +48,10 @@ void setup() {
 
   // no border
   noStroke();
+  
+  // Load a soundfile from the /data folder of the sketch and play it back
+  // Source of sound file: http://www.soundjig.com/pages/soundfx/beeps.html
+  poisonHit = new SoundFile(this, "beep4.mp3");
 }
 
 // this runs repeatedly
@@ -53,7 +67,12 @@ void draw() {
     scoreChange = 0;
     scoreChange = target[i].update();          // update animation of this circle 
     if (scoreChange != 0) {
+      // change score
       score += scoreChange;
+      // if poison (negative score change) play the annoying beep sound
+      if (scoreChange < 0 ) {
+        poisonHit.play();
+      }
       // change the currently active target
       current++;
       if (current > targetCount - 1) {         // go back to first target if we go above total targets being used (have to subtract 1 as arrays are zero based)
