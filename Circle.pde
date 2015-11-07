@@ -6,9 +6,10 @@ class Circle {
   float r;            // radius of circle
   float distance;     // distance between centre of circle and mouse click
   boolean hit;        // tracks whether this circle has been hit or not
-  float brightness;   // saturation for this circle
+  float alpha;   // saturation for this circle
   boolean active;     // whether this circle should currently be animated
   int currentPoints;  // current points available to earn if this circle is clicked
+  boolean poison;     // whether current target is a poison pill
 
   // constructor, is run whenever an object is created based on this class
   Circle(boolean active_) {
@@ -41,14 +42,22 @@ class Circle {
     // circle has not been hit
     hit = false;
 
-    // current brightness (black)
-    brightness = 0;
+    // current transparency (opaque)
+    alpha = 100;
 
     // set whether circle is active
     active = active_;
     
     // current points available from this circle
     currentPoints = 10;
+    
+    // 10% of the time, the target is a "poison pill" and turns red
+    // if a player clicks on a red target, they lose points instead of gaining them
+    if (random(0, 100) > 90) {
+      poison = true;
+    } else {
+      poison = false;
+    }
   }
 
   // update
@@ -64,7 +73,11 @@ class Circle {
     if (active == true) {
 
       // draw the circle
-      fill(0, 0, brightness);
+      if (poison == true) {
+          fill(0, 80, 90, alpha);
+      } else {
+          fill(0, 0, 0, alpha);
+      }
       //      x  y   w    h   
       ellipse(x, y, r*2, r*2); 
 
@@ -72,10 +85,10 @@ class Circle {
       if (hit == true) {
 
         // fade away
-        brightness += 4;
+        alpha -= 4;
 
-        // Make inactive after reaching 100% brightneess
-        if (brightness == 100) {
+        // Make inactive after reaching 0% alpha (transparent)
+        if (alpha == 0) {
           active = false;
         }
         
@@ -89,7 +102,11 @@ class Circle {
 
           // hit
           hit = true;
-          return currentPoints;
+          if (poison == true) {
+            return currentPoints * -1;
+          } else {
+            return currentPoints;
+          }
           
         }
       }
@@ -130,7 +147,7 @@ class Circle {
 
     // if circle gets beyond 150 pixels in size, start a new one
     if (r > 150) {
-      // reset the circle
+      // reset this circle
       reset(true);
     }
   }

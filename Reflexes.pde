@@ -34,7 +34,7 @@ void setup() {
   target[current].reset(true);  // make first target active
 
   // use hue-satuation-brightness color model
-  colorMode(HSB, 360, 100, 100);
+  colorMode(HSB, 360, 100, 100, 100);
 
   // no border
   noStroke();
@@ -52,7 +52,7 @@ void draw() {
   while (i < targetCount) {                    // iterate over all the circles
     scoreChange = 0;
     scoreChange = target[i].update();          // update animation of this circle 
-    if (scoreChange > 0) {
+    if (scoreChange != 0) {
       score += scoreChange;
       // change the currently active target
       current++;
