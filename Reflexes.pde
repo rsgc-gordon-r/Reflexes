@@ -48,6 +48,18 @@ void mousePressed() {
   c1.checkHit(mouseX, mouseY);
 }
 
+// responds when a key is pressed
+void keyPressed() {
+  
+  // Reset game if game is over and the space bar is pressed
+  if (key == ' ' && timeLeft == 0) {
+      timeLeft = 10;
+      c1.reset();
+      loop();
+  }
+  
+}
+
 // infoUpdate
 //
 // PURPOSE: To update the score and time left in the game
@@ -75,6 +87,8 @@ void isGameOver() {
     textAlign(CENTER);
     textSize(48);
     text("GAME OVER", width / 2, height / 2);
+    textSize(12);
+    text("Press space bar to play again", width / 2, height / 2 + 25);
     noLoop();
   }
 }
