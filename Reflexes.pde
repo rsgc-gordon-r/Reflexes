@@ -5,6 +5,7 @@ int timeLeft;       // time left in the game
 
 // this runs once
 void setup() {
+  
   // create canvas, 9:16 aspect ratio (9*50, 16*50), iPhone 5S size
   size(450, 800);
 
@@ -29,19 +30,12 @@ void draw() {
 
   // erase the background to create animation
   background(255);
+  
+  // update on screen displays
+  infoUpdate();
 
   // update the current circle
   score = score + c1.update();
-
-  // display time left in game at left side of screen
-  stroke(127);
-  textAlign(LEFT);
-  text("Time remaining: " + timeLeft, 50, 50);
-
-  // display current score at right side of screen
-  stroke(127);
-  textAlign(RIGHT);
-  text("Score: " + score, width - 50, 50);
 
   // end game if time runs out
   if (timeLeft == 0) {
@@ -52,7 +46,6 @@ void draw() {
     noLoop();
   }
  
- 
 }
 
 // responds when mouse is pressed
@@ -60,5 +53,22 @@ void mousePressed() {
   
   // check for a hit
   c1.checkHit(mouseX, mouseY);
+  
+}
+
+// infoUpdate
+//
+// PURPOSE: To update the score and time left in the game
+void infoUpdate() {
+
+  // display time left in game at left side of screen
+  stroke(127);
+  textAlign(LEFT);
+  text("Time remaining: " + timeLeft, 50, 50);
+
+  // display current score at right side of screen
+  stroke(127);
+  textAlign(RIGHT);
+  text("Score: " + score, width - 50, 50);
   
 }
