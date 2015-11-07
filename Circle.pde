@@ -6,6 +6,8 @@ class Circle {
   float r;  // radius of circle
   int currentPoints;  // current points available to earn if this circle is clicked
   float distance;      // distance between centre of circle and mouse click
+  boolean hit;      // tracks whether this circle has been hit or not
+  float brightness;   // saturation for this circle
 
   // constructor, is run whenever an object is created based on this class
   Circle() {
@@ -35,6 +37,12 @@ class Circle {
 
     // set current value of this circle
     currentPoints = 10;
+
+    // circle has not been hit
+    hit = false;
+    
+    // current brightness
+    brightness = 0;
   }
 
   // update
@@ -44,10 +52,60 @@ class Circle {
   int update() {
 
     // draw the circle
+    fill(0, 0, brightness);
     //      x  y   w    h   
-    fill(0);
     ellipse(x, y, r*2, r*2); 
 
+    // different behaviour depending on whether circle has been "hit" or not
+    if (hit == true) {
+
+      // fade away
+      brightness += 5;
+      
+    } else {
+
+      // grow circle
+      this.grow();
+      
+      // check for a hit
+      if (distance < r) {
+
+        // hit
+        int pointsEarned = currentPoints;
+        hit = true;
+        return pointsEarned;
+      }
+      
+    }
+
+    // default, return 0 since the cirlce has not been clicked
+    return 0;
+  }
+
+  // checkHit
+  void checkHit(float mX, float mY) {
+
+    // check for a hit
+    float leg1 = pow(x - mX, 2);  // horizontal distance between centre of circle and mouse position
+    float leg2 = pow(y - mY, 2);  // vertical distance between centre of circle and mouse position
+    distance = sqrt(leg1 + leg2);     // distance between centre of circle and mouse click
+  }
+
+  // infoUpdate
+  // 
+  // PURPOSE: Update the points available for this circle, if it is active
+  void infoUpdate() {
+    // display the value of the circle that is currently on the screen at bottom of screen
+    fill(0, 0, 50);
+    textAlign(CENTER);
+    text("Points available: " + currentPoints, width/2, height - 50);
+  }
+
+  // grow
+  //
+  // PURPOSE: Make the circle grow
+  void grow() {
+    
     // grow the radius for next time
     r = r + 2;
 
@@ -64,45 +122,12 @@ class Circle {
     // update points available to be earned
     infoUpdate();
 
-    // check for a hit
-    if (distance < r) {
-      
-      // hit
-      int pointsEarned = currentPoints;
-      this.reset();
-      return pointsEarned;
-    }
-    
     // if circle gets beyond 150 pixels in size, start a new one
     if (r > 150) {
-      
       // reset the circle
       this.reset();
-
     }
-
-    // default, return 0 since the cirlce has not been clicked
-    return 0;
-  }
-
-  // checkHit
-  void checkHit(float mX, float mY) {
-
-    // check for a hit
-    float leg1 = pow(x - mX, 2);  // horizontal distance between centre of circle and mouse position
-    float leg2 = pow(y - mY, 2);  // vertical distance between centre of circle and mouse position
-    distance = sqrt(leg1 + leg2);     // distance between centre of circle and mouse click
     
-  }
-  
-  // infoUpdate
-  // 
-  // PURPOSE: Update the points available for this circle, if it is active
-  void infoUpdate() {
-    // display the value of the circle that is currently on the screen at bottom of screen
-    fill(127);
-    textAlign(CENTER);
-    text("Points available: " + currentPoints, width/2, height - 50);
   }
   
 }

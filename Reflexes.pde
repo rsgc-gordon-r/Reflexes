@@ -16,21 +16,24 @@ void setup() {
   // set frame rate
   frameRate(60);
 
-  // all circles have black fill
-  fill(0);
-
   // show a cursor that is a crosshairs
   cursor(CROSS);
 
   // create the circle
   c1 = new Circle();
+  
+  // use hue-satuation-brightness color model
+  colorMode(HSB, 360, 100, 100);
+  
+  // no border
+  noStroke();
 }
 
 // this runs repeatedly
 void draw() {
 
   // erase the background to create animation
-  background(255);
+  background(0, 0, 100);
 
   // update the current circle
   score = score + c1.update();
@@ -68,7 +71,7 @@ void keyPressed() {
 void infoUpdate() {
 
   // change color of text
-  fill(127);
+  fill(0, 0, 50);
 
   // display time left in game at left side of screen
   textAlign(LEFT);
@@ -86,7 +89,7 @@ void isGameOver() {
 
   // end game if time runs out
   if (timeLeft == 0) {
-    fill(127);
+    fill(0, 0, 50);
     textAlign(CENTER);
     textSize(48);
     text("GAME OVER", width / 2, height / 2);
