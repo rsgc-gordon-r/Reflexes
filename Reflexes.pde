@@ -55,6 +55,7 @@ void keyPressed() {
   // Reset game if game is over and the space bar is pressed
   if (key == ' ' && timeLeft == 0) {
       timeLeft = 10;
+      score = 0;
       c1.reset();
       loop();
   }
