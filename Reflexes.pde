@@ -1,8 +1,12 @@
 // global variables – can be used anywhere below
-Circle c1;          // the circle to be drawn on screen
+Circle c1;          // one of the two circles to be drawn on screen
+Circle c2;          // the second of the two circles to be drawn on screen
+
 int score;          // current score earned
 int highScore;      // highest score earned in this session
 int timeLeft;       // time left in the game
+int currentCircle;  // what circle is "active"
+int scoreChange;    // score change in current frame of animation
 
 // this runs once
 void setup() {
@@ -19,12 +23,14 @@ void setup() {
   // show a cursor that is a crosshairs
   cursor(CROSS);
 
-  // create the circle
-  c1 = new Circle();
-  
+  // create the circles
+  c1 = new Circle(true);
+  c2 = new Circle(false);
+  currentCircle = 1;
+
   // use hue-satuation-brightness color model
   colorMode(HSB, 360, 100, 100);
-  
+
   // no border
   noStroke();
 }
@@ -35,11 +41,23 @@ void draw() {
   // erase the background to create animation
   background(0, 0, 100);
 
-  // update the current circle
-  score = score + c1.update();
+  // update the circles
+  scoreChange = c1.update(); 
+  if (scoreChange > 0) {
+    score = score + scoreChange;
+    currentCircle = 2;
+    c2.reset();
+  }
+  scoreChange = 0;
+  scoreChange = c2.update(); 
+  if (scoreChange > 0) {
+    score = score + scoreChange;
+    currentCircle = 1;
+    c1.reset();
+  }
 
   // update on screen displays
-  infoUpdate();
+  gameStateUpdate();
 
   // check whether game over
   isGameOver();
@@ -49,26 +67,39 @@ void draw() {
 void mousePressed() {
 
   // check for a hit
-  c1.checkHit(mouseX, mouseY);
-}
-
-// responds when a key is pressed
-void keyPressed() {
-  
-  // Reset game if game is over and the space bar is pressed
-  if (key == ' ' && timeLeft == 0) {
-      timeLeft = 10;
-      score = 0;
-      c1.reset();
-      loop();
+  if (currentCircle == 1) {
+    c1.checkHit(mouseX, mouseY);
+  } else {
+    c2.checkHit(mouseX, mouseY);
   }
   
 }
 
-// infoUpdate
+// responds when a key is pressed
+void keyPressed() {
+
+  // Reset game if game is over and the space bar is pressed
+  if (key == ' ' && timeLeft == 0) {
+    timeLeft = 10;
+    score = 0;
+    if (currentCircle == 1) {
+      c1.reset();
+    } else {
+      c2.reset();
+    }
+    loop();
+  }
+}
+
+// gameStateUpdate
 //
-// PURPOSE: To update the score and time left in the game
-void infoUpdate() {
+// PURPOSE: Keep track of points, time left, and draw updates for this information on screen.
+void gameStateUpdate() {
+
+  // reduce the time left every sixty frames
+  if (frameCount % 60 == 0) {
+    timeLeft = timeLeft - 1;
+  }
 
   // change color of text
   fill(0, 0, 50);
@@ -84,16 +115,19 @@ void infoUpdate() {
 
 // isGameOver
 //
-// PURPOSE: Checks to see whether the game is over
+// PURPOSE: Checks to see whether the game is over.
 void isGameOver() {
 
   // end game if time runs out
   if (timeLeft == 0) {
+    
+    // show game over text
     fill(0, 0, 50);
     textAlign(CENTER);
     textSize(48);
     text("GAME OVER", width / 2, height / 2);
-    // check for high score
+    
+    // check for new high score
     textSize(12);
     if (score > highScore) {
       highScore = score;
@@ -101,8 +135,11 @@ void isGameOver() {
     } else {
       text("Highest score so far: " + highScore, width / 2, height / 2 + 25);
     }
+    
     // New game prompt
     text("Press space bar to play again", width / 2, height / 2 + 50);
     noLoop();
+    
   }
+  
 }
