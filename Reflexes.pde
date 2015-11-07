@@ -5,7 +5,7 @@ int timeLeft;       // time left in the game
 
 // this runs once
 void setup() {
-  
+
   // create canvas, 9:16 aspect ratio (9*50, 16*50), iPhone 5S size
   size(450, 800);
 
@@ -20,7 +20,7 @@ void setup() {
 
   // show a cursor that is a crosshairs
   cursor(CROSS);
-  
+
   // create the circle
   c1 = new Circle();
 }
@@ -30,24 +30,22 @@ void draw() {
 
   // erase the background to create animation
   background(255);
-  
-  // update on screen displays
-  infoUpdate();
 
   // update the current circle
   score = score + c1.update();
-  
+
+  // update on screen displays
+  infoUpdate();
+
   // check whether game over
   isGameOver();
-
 }
 
 // responds when mouse is pressed
 void mousePressed() {
-  
+
   // check for a hit
   c1.checkHit(mouseX, mouseY);
-  
 }
 
 // infoUpdate
@@ -64,14 +62,13 @@ void infoUpdate() {
   stroke(127);
   textAlign(RIGHT);
   text("Score: " + score, width - 50, 50);
-  
 }
 
 // isGameOver
 //
 // PURPOSE: Checks to see whether the game is over
 void isGameOver() {
- 
+
   // end game if time runs out
   if (timeLeft == 0) {
     stroke(127);
@@ -80,5 +77,4 @@ void isGameOver() {
     text("GAME OVER", width / 2, height / 2);
     noLoop();
   }
-  
 }
