@@ -65,13 +65,14 @@ void keyPressed() {
 // PURPOSE: To update the score and time left in the game
 void infoUpdate() {
 
+  // change color of text
+  fill(127);
+
   // display time left in game at left side of screen
-  stroke(127);
   textAlign(LEFT);
   text("Time remaining: " + timeLeft, 50, 50);
 
   // display current score at right side of screen
-  stroke(127);
   textAlign(RIGHT);
   text("Score: " + score, width - 50, 50);
 }
@@ -83,7 +84,7 @@ void isGameOver() {
 
   // end game if time runs out
   if (timeLeft == 0) {
-    stroke(127);
+    fill(127);
     textAlign(CENTER);
     textSize(48);
     text("GAME OVER", width / 2, height / 2);

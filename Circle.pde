@@ -45,6 +45,7 @@ class Circle {
 
     // draw the circle
     //      x  y   w    h   
+    fill(0);
     ellipse(x, y, r*2, r*2); 
 
     // grow the radius for next time
@@ -61,7 +62,7 @@ class Circle {
     }
 
     // display the value of the circle that is currently on the screen at bottom of screen
-    stroke(127);
+    fill(127);
     textAlign(CENTER);
     text("Points available: " + currentPoints, width/2, height - 50);
 
