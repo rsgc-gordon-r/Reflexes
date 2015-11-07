@@ -36,16 +36,10 @@ void draw() {
 
   // update the current circle
   score = score + c1.update();
+  
+  // check whether game over
+  isGameOver();
 
-  // end game if time runs out
-  if (timeLeft == 0) {
-    stroke(127);
-    textAlign(CENTER);
-    textSize(48);
-    text("GAME OVER", width / 2, height / 2);
-    noLoop();
-  }
- 
 }
 
 // responds when mouse is pressed
@@ -70,5 +64,21 @@ void infoUpdate() {
   stroke(127);
   textAlign(RIGHT);
   text("Score: " + score, width - 50, 50);
+  
+}
+
+// isGameOver
+//
+// PURPOSE: Checks to see whether the game is over
+void isGameOver() {
+ 
+  // end game if time runs out
+  if (timeLeft == 0) {
+    stroke(127);
+    textAlign(CENTER);
+    textSize(48);
+    text("GAME OVER", width / 2, height / 2);
+    noLoop();
+  }
   
 }
