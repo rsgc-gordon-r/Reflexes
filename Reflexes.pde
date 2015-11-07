@@ -1,6 +1,7 @@
 // global variables – can be used anywhere below
 Circle c1;          // the circle to be drawn on screen
 int score;          // current score earned
+int highScore;      // highest score earned in this session
 int timeLeft;       // time left in the game
 
 // this runs once
@@ -88,8 +89,16 @@ void isGameOver() {
     textAlign(CENTER);
     textSize(48);
     text("GAME OVER", width / 2, height / 2);
+    // check for high score
     textSize(12);
-    text("Press space bar to play again", width / 2, height / 2 + 25);
+    if (score > highScore) {
+      highScore = score;
+      text("New high score! You earned " + highScore + " points.", width / 2, height / 2 + 25);
+    } else {
+      text("Highest score so far: " + highScore, width / 2, height / 2 + 25);
+    }
+    // New game prompt
+    text("Press space bar to play again", width / 2, height / 2 + 50);
     noLoop();
   }
 }
