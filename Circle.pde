@@ -61,10 +61,8 @@ class Circle {
       timeLeft = timeLeft - 1;
     }
 
-    // display the value of the circle that is currently on the screen at bottom of screen
-    fill(127);
-    textAlign(CENTER);
-    text("Points available: " + currentPoints, width/2, height - 50);
+    // update points available to be earned
+    infoUpdate();
 
     // check for a hit
     if (distance < r) {
@@ -95,6 +93,16 @@ class Circle {
     float leg2 = pow(y - mY, 2);  // vertical distance between centre of circle and mouse position
     distance = sqrt(leg1 + leg2);     // distance between centre of circle and mouse click
     
+  }
+  
+  // infoUpdate
+  // 
+  // PURPOSE: Update the points available for this circle, if it is active
+  void infoUpdate() {
+    // display the value of the circle that is currently on the screen at bottom of screen
+    fill(127);
+    textAlign(CENTER);
+    text("Points available: " + currentPoints, width/2, height - 50);
   }
   
 }
