@@ -46,14 +46,14 @@ void draw() {
   if (scoreChange > 0) {
     score = score + scoreChange;
     currentCircle = 2;
-    c2.reset();
+    c2.reset(true);
   }
   scoreChange = 0;
   scoreChange = c2.update(); 
   if (scoreChange > 0) {
     score = score + scoreChange;
     currentCircle = 1;
-    c1.reset();
+    c1.reset(true);
   }
 
   // update on screen displays
@@ -83,9 +83,11 @@ void keyPressed() {
     timeLeft = 10;
     score = 0;
     if (currentCircle == 1) {
-      c1.reset();
+      c1.reset(true);
+      c2.reset(false);
     } else {
-      c2.reset();
+      c1.reset(false);
+      c2.reset(true);
     }
     loop();
   }

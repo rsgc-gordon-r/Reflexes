@@ -17,14 +17,14 @@ class Circle {
     active = active_;
     if (active == true) {
       // When active, run the reset method to get this circle ready to use
-      reset();
+      reset(true);
     }
   }
 
   // reset
   //
   // PURPOSE: Get the circle ready for animation and being "in play"
-  void reset() {
+  void reset(boolean active_) {
 
     // initial radius is 0 pixels
     r = 0;
@@ -44,8 +44,8 @@ class Circle {
     // current brightness (black)
     brightness = 0;
 
-    // circle is now active
-    active = true;
+    // set whether circle is active
+    active = active_;
     
     // current points available from this circle
     currentPoints = 10;
@@ -131,7 +131,7 @@ class Circle {
     // if circle gets beyond 150 pixels in size, start a new one
     if (r > 150) {
       // reset the circle
-      reset();
+      reset(true);
     }
   }
 
